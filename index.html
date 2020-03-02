@@ -18,7 +18,7 @@
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
                <div class="cart-item">
-                  <div class="row">
+                  <div id="necessaryRemove" class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
                         <h5>iPhone 11 128GB Black</h5>
@@ -31,13 +31,13 @@
                            <button  id="add-phone" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="newAddPrice">1219</span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <img id="crossClicked" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
 
                <div class="cart-item">
-                  <div class="row">
+                  <div id="necessaryRemove1" class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
                         <h5>iPhone 11 Silicone Case - Black</h5>
@@ -50,7 +50,7 @@
 
                         </div>
                         <h5>$<span id="casingPrice">59</span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <img id="crossClicked1" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -88,19 +88,15 @@
        </div>
 
    </section>
-   
-
 
    <script>
          
           const addPhone=document.getElementById("add-phone");
           addPhone.addEventListener("click",function(){
-   
            var changedPresentValue=getIncrement("present-value");
            document.getElementById('present-value').value=changedPresentValue; 
            var totalAddPhonePrice=changedPresentValue*1219;
            document.getElementById("newAddPrice").innerText=totalAddPhonePrice; 
-      
            var SubTotal=getSubTotal("newAddPrice","casingPrice");
            document.getElementById("subTotal").innerText=SubTotal;
            document.getElementById("subTotal1").innerText=SubTotal;
@@ -144,10 +140,7 @@
              else{
                 alert("Not Possible To Change!!")
              }
-            
           });
-
-          
            function getIncrement(id){
               presentValue=document.getElementById(id).value;
               presentValueAmount=parseFloat(presentValue);
@@ -174,17 +167,24 @@
             const checkOut=document.getElementById("checkOutFinal")
             checkOut.style.display="block";
          })
+         const crossClicked=document.getElementById("crossClicked");
+         crossClicked.addEventListener("click",function(){
+         document.getElementById("necessaryRemove").style.display="none";
+         document.getElementById("newAddPrice").innerText=0; 
          
-
-         //  var presentCasing=document.getElementById("present-case").value;
-         //  const addCasing=document.getElementById("addCasing");
-         //  addCasing.addEventListener("click",function(){
-         //   presentCasing++;
-         //   document.getElementById('present-case').value=presentCasing;
-         //   totalAddCasingPrice=presentCasing*59;
-           
-     
-       
+         var SubTotal=getSubTotal("newAddPrice","casingPrice");
+         document.getElementById("subTotal").innerText=SubTotal;
+         document.getElementById("subTotal1").innerText=SubTotal; 
+         })
+         const crossClicked1=document.getElementById("crossClicked1");
+         crossClicked1.addEventListener("click",function(){
+         document.getElementById("necessaryRemove1").style.display="none";
+         document.getElementById("casingPrice").innerText=0;  
+         var SubTotal=getSubTotal("newAddPrice","casingPrice");
+         document.getElementById("subTotal").innerText=SubTotal;
+         document.getElementById("subTotal1").innerText=SubTotal; 
+         })
+         
          
 
       </script>
