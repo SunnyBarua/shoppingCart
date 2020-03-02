@@ -53,3 +53,10 @@ body{
 	background-color: #2FBE70;
 	border: none;
 }
+#checkOutFinal{
+	display: none;
+	
+}
+.card{
+	margin: 0 auto;
+}

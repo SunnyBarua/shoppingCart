@@ -7,12 +7,13 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link rel="stylesheet" href="style.css">
    <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
 
-   <section>
+   <section id="shop">
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
@@ -66,73 +67,123 @@
                      <div class="col-md-4 status">
                         <h5>$<span id="subTotal">1278</span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$<span id="subTotal1">1278</span></h5>
                      </div>
                   </div>
                </div>
                <div class="col-md-12 pt-4 pb-4">
-                  <button type="button" class="btn btn-success check-out">Check Out</button>
+                  <button id="finalCheckOut" type="button" class="btn btn-success check-out">Check Out</button>
                </div>
             </div>
          </div>
       </div>
    </section>
+   <section id="checkOutFinal">
+      <div class="card w-50">
+         <div class="card-body">
+           <h5 class="card-title">Congratulations!!!</h5>
+           <p class="card-text">Your shopping gets successful!!</p>
+           <a href="#" class="btn btn-primary">Purchasing Completed</a>
+         </div>
+       </div>
+
+   </section>
+   
 
 
    <script>
-
-          
-          var presentValue=document.getElementById("present-value").value;
+         
           const addPhone=document.getElementById("add-phone");
           addPhone.addEventListener("click",function(){
-           presentValue++;
-           document.getElementById('present-value').value=presentValue;
-           totalAddPhonePrice=presentValue*1219;
-           document.getElementById("newAddPrice").innerText=totalAddPhonePrice;
-           const a=document.getElementById("newAddPrice").innerText;
-          const b=document.getElementById("casingPrice").innerText
-          SubTitle=parseFloat(a)+parseFloat(b)
-          document.getElementById('subTotal').innerText=SubTitle
+   
+           var changedPresentValue=getIncrement("present-value");
+           document.getElementById('present-value').value=changedPresentValue; 
+           var totalAddPhonePrice=changedPresentValue*1219;
+           document.getElementById("newAddPrice").innerText=totalAddPhonePrice; 
+      
+           var SubTotal=getSubTotal("newAddPrice","casingPrice");
+           document.getElementById("subTotal").innerText=SubTotal;
+           document.getElementById("subTotal1").innerText=SubTotal;
           });
-
-          const minusPhone=document.getElementById("minus-phone")
+          const minusPhone=document.getElementById("minus-phone");
           minusPhone.addEventListener("click",function(){
-             presentValue--;
-             document.getElementById('present-value').value==presentValue;
-             totalPhonePrice=presentValue*1219;
-             document.getElementById("newAddPrice").innerText=totalPhonePrice;
-             const a=document.getElementById("newAddPrice").innerText;
-          const b=document.getElementById("casingPrice").innerText
-          SubTitle=parseFloat(a)+parseFloat(b)
-          document.getElementById('subTotal').innerText=SubTitle
-          })
-
-
-          var presentCasing=document.getElementById("present-case").value;
+             var changedPresentValue=getDecrement("present-value");
+             document.getElementById('present-value').value=changedPresentValue;
+             if(changedPresentValue>=0){
+               var totalAddPhonePrice=changedPresentValue*(1219);
+             document.getElementById("newAddPrice").innerText=totalAddPhonePrice; 
+             var SubTotal=getSubTotal("newAddPrice","casingPrice");
+             document.getElementById("subTotal").innerText=SubTotal;
+             document.getElementById("subTotal1").innerText=SubTotal;
+             }
+             else{
+                alert("Not Possible to Change!!"); 
+             }        
+          });
           const addCasing=document.getElementById("addCasing");
           addCasing.addEventListener("click",function(){
-           presentCasing++;
-           document.getElementById('present-case').value=presentCasing;
-           totalAddCasingPrice=presentCasing*59;
-           
-           document.getElementById("casingPrice").innerText=totalAddCasingPrice;
-           const a=document.getElementById("newAddPrice").innerText;
-          const b=document.getElementById("casingPrice").innerText
-          SubTitle=parseFloat(a)+parseFloat(b)
-          document.getElementById('subTotal').innerText=SubTitle
-          });
-          const minusCasing=document.getElementById("minusCasing")
+            var changedPresentCasingValue=getIncrement("present-case");
+            document.getElementById('present-case').value=changedPresentCasingValue;
+            var totalAddPCasingPrice=changedPresentCasingValue*59;
+            document.getElementById("casingPrice").innerText=totalAddPCasingPrice; 
+            var SubTotal=getSubTotal("newAddPrice","casingPrice"); 
+            document.getElementById("subTotal").innerText=SubTotal;
+            document.getElementById("subTotal1").innerText=SubTotal;
+         });
+         const minusCasing=document.getElementById("minusCasing");
           minusCasing.addEventListener("click",function(){
-             presentCasing--;
-             document.getElementById('present-case').value=presentCasing;
-             totalCasingPrice=presentCasing*59;
-             document.getElementById("casingPrice").innerText=totalCasingPrice;
-             const a=document.getElementById("newAddPrice").innerText;
-          const b=document.getElementById("casingPrice").innerText
-          SubTitle=parseFloat(a)+parseFloat(b)
-          document.getElementById('subTotal').innerText=SubTitle;
+             var changedPresentCasingValue=getDecrement("present-case");
+             document.getElementById('present-case').value=changedPresentCasingValue;
+             if(changedPresentCasingValue>=0){
+               var totalAddPCasingPrice=changedPresentCasingValue*(59);
+              document.getElementById("casingPrice").innerText=totalAddPCasingPrice; 
+             var SubTotal=getSubTotal("newAddPrice","casingPrice");  
+             document.getElementById("subTotal").innerText=SubTotal;
+             document.getElementById("subTotal1").innerText=SubTotal;
+             }
+             else{
+                alert("Not Possible To Change!!")
+             }
+            
           });
+
           
+           function getIncrement(id){
+              presentValue=document.getElementById(id).value;
+              presentValueAmount=parseFloat(presentValue);
+              return presentValueAmount= presentValueAmount+1;
+           } 
+           function getDecrement(id){
+              presentValue=document.getElementById(id).value;
+              presentValueAmount=parseFloat(presentValue);
+              return presentValueAmount= presentValueAmount-1;
+           } 
+         
+          
+         function getSubTotal(subTotal1,subTotal2){
+            var subTotal1=parseFloat(document.getElementById(subTotal1).innerText);
+            var subTotal2=parseFloat(document.getElementById(subTotal2).innerText);
+            var finalSubTotal=subTotal1+subTotal2;
+            return finalSubTotal;
+
+         }
+         const finalCheckOut=document.getElementById("finalCheckOut");
+         finalCheckOut.addEventListener("click",function(){
+            const Card=document.getElementById("shop");
+            Card.style.display="none";
+            const checkOut=document.getElementById("checkOutFinal")
+            checkOut.style.display="block";
+         })
+         
+
+         //  var presentCasing=document.getElementById("present-case").value;
+         //  const addCasing=document.getElementById("addCasing");
+         //  addCasing.addEventListener("click",function(){
+         //   presentCasing++;
+         //   document.getElementById('present-case').value=presentCasing;
+         //   totalAddCasingPrice=presentCasing*59;
+           
+     
        
          
 
